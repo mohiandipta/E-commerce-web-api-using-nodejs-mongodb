@@ -7,10 +7,8 @@ const api = process.env.API_URL
 
 
 //middleware method
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(express.json());
+
 
 
 // api will be in http://localhost:3000/api/v1/product
@@ -26,7 +24,7 @@ app.get(`${api}/products`, (req, res) => {
 app.post(`${api}/products`, (req, res) => {
     const newProduct = req.body
     console.log(newProduct)
-    res.send(products)
+    res.send(newProduct)
 })
 
 
