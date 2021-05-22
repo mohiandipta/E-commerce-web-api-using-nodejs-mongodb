@@ -1,13 +1,32 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 require('dotenv/config')
 
 const api = process.env.API_URL
 
 
+//middleware method
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+
 // api will be in http://localhost:3000/api/v1/product
-app.get(api + '/products', (req, res) => {
-    res.send('Hello world')
+app.get(`${api}/products`, (req, res) => {
+    const products = {
+        id: 1,
+        name: 'Mobile',
+        image: 'Some_url'
+    }
+    res.send(products)
+})
+
+app.post(`${api}/products`, (req, res) => {
+    const newProduct = req.body
+    console.log(newProduct)
+    res.send(products)
 })
 
 
