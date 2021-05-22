@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
+const morgan = require('morgan')
+
+
 require('dotenv/config')
 
 const api = process.env.API_URL
@@ -8,6 +10,7 @@ const api = process.env.API_URL
 
 //middleware method
 app.use(express.json());
+app.use(logger(process.env.API_URL))
 
 
 
