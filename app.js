@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 
 
 require('dotenv/config')
-
 const api = process.env.API_URL
+
 
 
 //middleware method
@@ -25,6 +25,7 @@ app.get(`${api}/products`, (req, res) => {
     res.send(products)
 })
 
+//post data
 app.post(`${api}/products`, (req, res) => {
     const newProduct = req.body
     console.log(newProduct)
@@ -32,10 +33,21 @@ app.post(`${api}/products`, (req, res) => {
 })
 
 
-//test git
-//git respode
+// mongodb database connection
+mongoose.connect(process.env.CONNECTION_STRING,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: 'eshop-database'
+    })
+    .then(() => {
+        console.log('database connection is ready')
+    })
+    .catch(() => {
+        console.log('database cant connected')
+    })
 
-mongoose.connect()
+
 
 app.listen(3000, () => {
     console.log(api)
