@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 
 
 require('dotenv/config')
@@ -10,7 +11,7 @@ const api = process.env.API_URL
 
 //middleware method
 app.use(express.json());
-app.use(logger(process.env.API_URL))
+app.use(morgan('tiny'))
 
 
 
@@ -30,6 +31,8 @@ app.post(`${api}/products`, (req, res) => {
     res.send(newProduct)
 })
 
+
+mongoose.connect()
 
 app.listen(3000, () => {
     console.log(api)
