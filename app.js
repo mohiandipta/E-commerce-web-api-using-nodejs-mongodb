@@ -25,11 +25,35 @@ app.get(`${api}/products`, (req, res) => {
     res.send(products)
 })
 
+
+// productSchema
+const productSchema = mongoose.Schema({
+    name: String,
+    image: String,
+    countInStock: Number
+})
+
+const Product = mongoose.model('Product', productSchema)
+
+
+
 //post data
 app.post(`${api}/products`, (req, res) => {
-    const newProduct = req.body
-    console.log(newProduct)
-    res.send(newProduct)
+    const product = new Product({
+        name: req.body.name,
+        image: req.body.image,
+        countInStock: req.body.countInStock
+    })
+    product.save()
+        .then((createdProduct) => {
+            res.status(201).json(createdProduct)
+        })
+        .catch((err) => {
+            res.status(500).json({
+                error: err,
+                success: false
+            })
+        })
 })
 
 
@@ -43,7 +67,7 @@ mongoose.connect(process.env.CONNECTION_STRING,
     .then(() => {
         console.log('database connection is ready')
     })
-    .catch(() => {
+    .catch((err) => {
         console.log('database cant connected')
     })
 
