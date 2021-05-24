@@ -14,18 +14,6 @@ app.use(express.json());
 app.use(morgan('tiny'))
 
 
-
-// api will be in http://localhost:3000/api/v1/product
-app.get(`${api}/products`, (req, res) => {
-    const products = {
-        id: 1,
-        name: 'Mobile',
-        image: 'Some_url'
-    }
-    res.send(products)
-})
-
-
 // productSchema
 const productSchema = mongoose.Schema({
     name: String,
@@ -37,6 +25,7 @@ const Product = mongoose.model('Product', productSchema)
 
 
 
+// POST product => DATABSE
 //post data
 app.post(`${api}/products`, (req, res) => {
     const product = new Product({
@@ -55,6 +44,22 @@ app.post(`${api}/products`, (req, res) => {
             })
         })
 })
+
+
+// After POST product data
+// GET productList FROM DATABASE
+// api will be in http://localhost:3000/api/v1/product
+app.get(`${api}/products`, async (req, res) => {
+    const productsList = await Product.find()
+    // detecting issues
+    if (!productList) {
+        res.status(500).json({
+            success: false
+        })
+    }
+    res.send(productsList)
+})
+
 
 
 // mongodb database connection
