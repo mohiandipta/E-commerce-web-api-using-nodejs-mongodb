@@ -1,10 +1,10 @@
-const user = require('../models/order')
+const { Order } = require('../models/order')
 const express = require('express')
 const router = express.Router()
 
 
 router.get(`/`, async (req, res) => {
-    const orderList = await Product.find()
+    const orderList = await Order.find()
     // detecting issues
     if (!orderList) {
         res.status(500).json({

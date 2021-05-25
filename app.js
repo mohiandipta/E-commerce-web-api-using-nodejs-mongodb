@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 
 
+
 // getting value from .env
 require('dotenv/config')
 const api = process.env.API_URL
@@ -28,7 +29,6 @@ app.use(`${api}/products`, productRoutes)
 
 
 
-
 // mongodb database connection
 mongoose.connect(process.env.CONNECTION_STRING,
     {
@@ -40,7 +40,7 @@ mongoose.connect(process.env.CONNECTION_STRING,
         console.log('database connection is ready')
     })
     .catch((err) => {
-        console.log('database cant connected')
+        console.log('database can not be connected')
     })
 
 

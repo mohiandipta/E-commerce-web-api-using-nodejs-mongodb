@@ -1,10 +1,10 @@
-const user = require('../models/category')
+const { Categories } = require('../models/category')
 const express = require('express')
 const router = express.Router()
 
 
 router.get(`/`, async (req, res) => {
-    const categoryList = await Product.find()
+    const categoryList = await Categories.find()
     // detecting issues
     if (!categoryList) {
         res.status(500).json({
