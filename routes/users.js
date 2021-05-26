@@ -4,7 +4,9 @@ const router = express.Router()
 
 
 router.get(`/`, async (req, res) => {
-    const userList = await User.find()
+    const userList = await User.find(
+
+    )
     // detecting issues
     if (!userList) {
         res.status(500).json({
