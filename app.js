@@ -2,30 +2,25 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const productsRouter = require('./routes/products')
+const categoryRouter = require('./routes/categories')
 
 
-
-// getting value from .env
 require('dotenv/config')
 const api = process.env.API_URL
 
 
 
-// middleware method
+//middleware method
 app.use(express.json());
 app.use(morgan('tiny'))
 
+app.use(`${api}/products`, productsRouter)
+app.use(`${api}/category`, categoryRouter)
 
-// routers
-const categoriesRoutes = require('./routes/categories')
-const ordersRoutes = require('./routes/orders')
-const usersRoutes = require('./routes/users')
-const productRoutes = require('./routes/products')
-
-app.use(`${api}/products`, categoriesRoutes)
-app.use(`${api}/orders`, ordersRoutes)
-app.use(`${api}/users`, usersRoutes)
-app.use(`${api}/products`, productRoutes)
+//Model path
+const Product = require('./model/product')
+const Category = require('./model/category')
 
 
 
@@ -40,11 +35,11 @@ mongoose.connect(process.env.CONNECTION_STRING,
         console.log('database connection is ready')
     })
     .catch((err) => {
-        console.log('database can not be connected')
+        console.log('database cant connected')
     })
 
 
-// server
+
 app.listen(3000, () => {
     console.log(api)
     console.log('Server is running  at http://localhost:3000')
