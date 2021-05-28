@@ -3,7 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const productsRouter = require('./routes/products')
-const categoryRouter = require('./routes/categories')
+const categoriesRouter = require('./routes/categories')
 
 
 require('dotenv/config')
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(morgan('tiny'))
 
 app.use(`${api}/products`, productsRouter)
-app.use(`${api}/category`, categoryRouter)
+app.use(`${api}/category`, categoriesRouter)
 
 //Model path
 const Product = require('./model/product')
