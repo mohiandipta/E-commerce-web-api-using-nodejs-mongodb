@@ -2,9 +2,8 @@ const express = require('express')
 const { Category } = require('../model/category')
 const router = express.Router();
 
-
 //get
-router.get(`/`, async (rreq, res) => {
+router.get(`/`, async (req, res) => {
     const categoryList = await Category.find({})
     res.send(categoryList)
 })
@@ -14,7 +13,7 @@ router.post('/', (res, req) => {
     const category = new Category({
         name: req.body.name,
         image: req.body.image,
-        dictributor: req.body.dictributor
+        distributor: req.body.distributor
     })
     category.save()
         .then((createdProduct) => {
@@ -27,6 +26,5 @@ router.post('/', (res, req) => {
             })
         })
 })
-
 
 module.exports = router;
