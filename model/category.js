@@ -6,4 +6,4 @@ const categorySchema = mongoose.Schema({
     distributor: String
 })
 
-exports.Category = mongoose.model('Categories', categorySchema)
+exports.Category = mongoose.model('Category', categorySchema)

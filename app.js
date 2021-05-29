@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(morgan('tiny'))
 
 app.use(`${api}/products`, productsRouter)
-app.use(`${api}/category`, categoriesRouter)
+app.use(`${api}/categories`, categoriesRouter)
 
 //Model path
 const Product = require('./model/product')
