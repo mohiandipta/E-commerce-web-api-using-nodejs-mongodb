@@ -2,8 +2,8 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const productsRouter = require('./routes/products')
-const categoriesRouter = require('./routes/categories')
+const cors = require('cors')
+
 
 
 require('dotenv/config')
@@ -15,12 +15,13 @@ const api = process.env.API_URL
 app.use(express.json());
 app.use(morgan('tiny'))
 
+
+//routes
+const productsRouter = require('./routes/products')
+const categoriesRouter = require('./routes/categories')
+
 app.use(`${api}/products`, productsRouter)
 app.use(`${api}/categories`, categoriesRouter)
-
-//Model path
-const Product = require('./model/product')
-const Category = require('./model/category')
 
 
 

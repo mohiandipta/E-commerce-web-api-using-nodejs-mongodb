@@ -8,23 +8,5 @@ router.get(`/`, async (req, res) => {
     res.send(categoryList)
 })
 
-//post
-router.post('/', (res, req) => {
-    const category = new Category({
-        name: req.body.name,
-        image: req.body.image,
-        distributor: req.body.distributor
-    })
-    category.save()
-        .then((createdProduct) => {
-            res.status(201).json(createdCategory)
-        })
-        .catch((err) => {
-            res.status(500).json({
-                error: err,
-                success: false
-            })
-        })
-})
 
 module.exports = router;
