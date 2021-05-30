@@ -9,6 +9,9 @@ const cors = require('cors')
 require('dotenv/config')
 const api = process.env.API_URL
 
+//cors
+app.use(cors())
+app.options('*', cors())
 
 
 //middleware method
