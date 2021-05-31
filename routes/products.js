@@ -29,4 +29,20 @@ router.post(`/`, (req, res) => {
 })
 
 
+//url link will be http://localhost:3000/api/v1/products/(ID)
+//delete data
+router.delete('/:id', (req, res) => {
+    Product.findByIdAndRemove(req.params.id)
+        .then(product => {
+            if (product) {
+                return res.status(200).json({ success: true, message: 'the product has been deleted!' })
+            } else {
+                return res.status(404).json({ success: false, message: 'the product not found!' })
+            }
+        }).catch(err => {
+            return res.status(400), json({ success: false, error: err })
+        })
+})
+
+
 module.exports = router
