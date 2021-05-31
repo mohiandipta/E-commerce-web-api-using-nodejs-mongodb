@@ -6,10 +6,19 @@ const router = express.Router();
 
 
 //api will be in http://localhost:3000/api/v1/categories
-//get 
+//get all data
 router.get(`/`, async (req, res) => {
     const categoryList = await Category.find({})
     res.send(categoryList)
+})
+//get data by ID
+//url will be in http://localhost:3000/api/v1/categories/ID
+router.get('/:id', async (req, res) => {
+    const category = await Category.findById(req.params.id)
+    if (!category) {
+        return res.status().json({ message: 'the category with the given ID was not found' })
+    }
+    res.status(200).send(category)
 })
 
 
