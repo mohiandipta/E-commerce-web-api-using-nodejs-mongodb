@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const express = require('express')
 const { Category } = require('../model/category')
 const router = express.Router();
@@ -64,7 +63,7 @@ router.delete('/:id', (req, res) => {
                 return res.status(404).json({ success: false, message: 'the category not found!' })
             }
         }).catch(err => {
-            return res.status(400), json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         })
 })
 

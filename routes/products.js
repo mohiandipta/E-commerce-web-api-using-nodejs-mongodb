@@ -18,15 +18,15 @@ router.get('/:id', async (req, res) => {
     res.status(200).send(product)
 })
 
-//post data
+//post data by category
 router.post(`/`, async (req, res) => {
     //validating category
-    const category = await Category.findById(req.params.category)
+    const category = await Category.findById(req.body.category)
     if (!category) {
-        return res.status(400).send('Invalid category')
+        return res.status(500).send('Invalid category')
     }
 
-    const product = new Product({
+    let product = new Product({
         name: req.body.name,
         description: req.body.description,
         richDescription: req.body.richDescription,
@@ -36,14 +36,14 @@ router.post(`/`, async (req, res) => {
         category: req.body.category,
         countInStock: req.body.countInStock,
         rating: req.body.rating,
-        numReview: req.body.numReview,
+        numReviews: req.body.numReviews,
         isFeatured: req.body.isFeatured
     })
     product = await product.save()
     if (!product) {
-        return res.status(500).json({ message: 'the product can not be created' })
+        return res.status(500).send({ message: 'the product can not be created' })
     }
-    res.status(200).send(product)
+    res.send(product)
 })
 
 
