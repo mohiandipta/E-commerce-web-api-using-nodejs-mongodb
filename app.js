@@ -40,7 +40,7 @@ mongoose.connect(process.env.CONNECTION_STRING,
         console.log('database connection is ready')
     })
     .catch((err) => {
-        console.log('database cant connected')
+        console.log('database can not be connected')
     })
 
 

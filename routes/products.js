@@ -1,4 +1,5 @@
 const express = require('express')
+const { Category } = require('../model/category')
 const { Product } = require('../model/product')
 const router = express.Router()
 
@@ -8,24 +9,41 @@ router.get(`/`, async (req, res) => {
     const productList = await Product.find()
     res.send(productList)
 })
+//get data by ID
+router.get('/:id', async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+        return res.status(500).json({ message: 'the product with the given ID was not found' })
+    }
+    res.status(200).send(product)
+})
 
 //post data
-router.post(`/`, (req, res) => {
+router.post(`/`, async (req, res) => {
+    //validating category
+    const category = await Category.findById(req.params.category)
+    if (!category) {
+        return res.status(400).send('Invalid category')
+    }
+
     const product = new Product({
         name: req.body.name,
+        description: req.body.description,
+        richDescription: req.body.richDescription,
         image: req.body.image,
-        countInStock: req.body.countInStock
+        brand: req.body.brand,
+        price: req.body.price,
+        category: req.body.category,
+        countInStock: req.body.countInStock,
+        rating: req.body.rating,
+        numReview: req.body.numReview,
+        isFeatured: req.body.isFeatured
     })
-    product.save()
-        .then((createdProduct) => {
-            res.status(201).json(createdProduct)
-        })
-        .catch((err) => {
-            res.status(500).json({
-                error: err,
-                success: false
-            })
-        })
+    product = await product.save()
+    if (!product) {
+        return res.status(500).json({ message: 'the product can not be created' })
+    }
+    res.status(200).send(product)
 })
 
 

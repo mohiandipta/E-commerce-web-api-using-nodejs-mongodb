@@ -11,16 +11,32 @@ router.get(`/`, async (req, res) => {
     const categoryList = await Category.find({})
     res.send(categoryList)
 })
+
 //get data by ID
 //url will be in http://localhost:3000/api/v1/categories/ID
 router.get('/:id', async (req, res) => {
     const category = await Category.findById(req.params.id)
     if (!category) {
-        return res.status().json({ message: 'the category with the given ID was not found' })
+        return res.status(500).json({ message: 'the category with the given ID was not found' })
     }
     res.status(200).send(category)
 })
 
+//put(update) data by ID
+router.put('/:id', async (req, res) => {
+    const category = await Category.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            icon: req.body.icon,
+            color: req.body.color
+        }
+    )
+    if (!category) {
+        return res.status(500).json({ message: 'the category with the given ID was not found' })
+    }
+    res.status(200).send(category)
+})
 
 //post data
 router.post('/', async (req, res) => {
