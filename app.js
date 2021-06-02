@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 
-
 require('dotenv/config')
 const api = process.env.API_URL
 
@@ -22,10 +21,13 @@ app.use(morgan('tiny'))
 //routes
 const productsRouter = require('./routes/products')
 const categoriesRouter = require('./routes/categories')
+const ordersRouter = require('./routes/orders')
+const usersRouter = require('./routes/users')
 
 app.use(`${api}/products`, productsRouter)
+app.use(`${api}/orders`, ordersRouter)
+app.use(`${api}/users`, usersRouter)
 app.use(`${api}/categories`, categoriesRouter)
-
 
 
 // mongodb database connection
@@ -42,7 +44,6 @@ mongoose.connect(process.env.CONNECTION_STRING,
     .catch((err) => {
         console.log('database can not be connected')
     })
-
 
 
 app.listen(3000, () => {

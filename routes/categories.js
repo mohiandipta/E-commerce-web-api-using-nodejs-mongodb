@@ -7,14 +7,14 @@ const router = express.Router();
 //api will be in http://localhost:3000/api/v1/categories
 //get all data
 router.get(`/`, async (req, res) => {
-    const categoryList = await Category.find({})
+    let categoryList = await Category.find({})
     res.send(categoryList)
 })
 
 //get data by ID
 //url will be in http://localhost:3000/api/v1/categories/ID
 router.get('/:id', async (req, res) => {
-    const category = await Category.findById(req.params.id)
+    let category = await Category.findById(req.params.id)
     if (!category) {
         return res.status(500).json({ message: 'the category with the given ID was not found' })
     }
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
 
 //put(update) data by ID
 router.put('/:id', async (req, res) => {
-    const category = await Category.findByIdAndUpdate(
+    let category = await Category.findByIdAndUpdate(
         req.params.id,
         {
             name: req.body.name,

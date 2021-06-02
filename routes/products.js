@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 //post data by category
 router.post(`/`, async (req, res) => {
     //validating category
-    const category = await Category.findById(req.body.category)
+    let category = await Category.findById(req.body.category)
     if (!category) {
         return res.status(500).send('Invalid category')
     }
@@ -48,7 +48,7 @@ router.post(`/`, async (req, res) => {
 
 
 //url link will be http://localhost:3000/api/v1/products/(ID)
-//delete data
+//delete data by id
 router.delete('/:id', (req, res) => {
     Product.findByIdAndRemove(req.params.id)
         .then(product => {
