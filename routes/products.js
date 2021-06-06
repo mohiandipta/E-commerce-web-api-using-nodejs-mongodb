@@ -72,4 +72,25 @@ router.get(`/get/count`, async (req, res) => {
     res.status(200).send({ productCount: productCount })
 })
 
+
+//product featured
+router.get(`/get/featured`, async (req, res) => {
+    const productFeatured = await Product.find({ isFeatured: true })
+    if (!productFeatured) {
+        return res.status(500).json({ success: false })
+    }
+    res.status(200).send(productFeatured)
+})
+//limited featured
+router.get('/get/featured/:count', async (req, res) => {
+    const count = req.params.count ? req.params.count : 0
+    const products = await Product.find({ isFeatured: true }).limit(+count)
+    if (!products) {
+        res.status(500).json({ success: false })
+    }
+    res.send(products)
+})
+
+
+
 module.exports = router
