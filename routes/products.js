@@ -10,7 +10,7 @@ router.get(`/`, async (req, res) => {
     res.send(productList)
 })
 //get data by ID
-router.get('/:id', async (req, res) => {
+router.get(`/:id`, async (req, res) => {
     const product = await Product.findById(req.params.id)
     if (!product) {
         return res.status(500).json({ message: 'the product with the given ID was not found' })
@@ -49,7 +49,7 @@ router.post(`/`, async (req, res) => {
 
 //url link will be http://localhost:3000/api/v1/products/(ID)
 //delete data by id
-router.delete('/:id', (req, res) => {
+router.delete(`/:id`, (req, res) => {
     Product.findByIdAndRemove(req.params.id)
         .then(product => {
             if (product) {
@@ -62,5 +62,14 @@ router.delete('/:id', (req, res) => {
         })
 })
 
+
+//product count
+router.get(`/get/count`, async (req, res) => {
+    const productCount = await Product.countDocuments((count) => count)
+    if (!productCount) {
+        return res.status(500).json({ success: false })
+    }
+    res.status(200).send({ productCount: productCount })
+})
 
 module.exports = router
