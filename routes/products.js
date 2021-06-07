@@ -5,10 +5,10 @@ const router = express.Router()
 
 
 // api will be in http://localhost:3000/api/v1/products
-router.get(`/`, async (req, res) => {
-    const productList = await Product.find()
-    res.send(productList)
-})
+// router.get(`/`, async (req, res) => {
+//     const productList = await Product.find()
+//     res.send(productList)
+// })
 //get data by ID
 router.get(`/:id`, async (req, res) => {
     const product = await Product.findById(req.params.id)
@@ -17,6 +17,25 @@ router.get(`/:id`, async (req, res) => {
     }
     res.status(200).send(product)
 })
+
+
+//get product by filtering and category
+//url will be localhost:3000/pi/v1/products?categories:ID,ID
+//query parameter is going always after a question (?) mark
+router.get(`/`, async (req, res) => {
+    let filter = {}
+    if (req.query.categories) {
+        filter = { category: req.query.categories.split(',') }
+    }
+
+    const productList = await Product.find(filter).populate('category')
+
+    if (!productList) {
+        res.status(500).json({ success: false, message: 'filtering can not be done' })
+    }
+    res.send(productList)
+})
+
 
 //post data by category
 router.post(`/`, async (req, res) => {
