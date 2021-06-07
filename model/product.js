@@ -53,7 +53,16 @@ const productSchema = mongoose.Schema({
     dateCreated: {
         type: Date,
         default: Date.now()
-    }
+    },
+})
+
+
+//changing _id key to id for further use
+productSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+productSchema.set('toJSON', {
+    virtuals: true,
 })
 
 exports.Product = mongoose.model('Product', productSchema)
