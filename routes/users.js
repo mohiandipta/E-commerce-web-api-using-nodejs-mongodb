@@ -62,6 +62,22 @@ router.post('/', async (req, res) => {
 })
 
 
+//login a user with validating by email
+router.post('/login', async (req, res) => {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        return res.status(500).json({ message: 'User not found, Please create an user or check again' })
+    }
+
+    //user password matching
+    if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        res.status(200).send('User Authenticated')
+    } else {
+        res.status(200).send('Password is wrong!')
+    }
+})
+
+
 //url link will be http://localhost:3000/api/v1/categories/(ID)
 //delete data
 router.delete('/:id', (req, res) => {
