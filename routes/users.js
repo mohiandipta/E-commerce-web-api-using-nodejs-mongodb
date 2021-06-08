@@ -42,11 +42,16 @@ router.put('/:id', async (req, res) => {
 //post data
 router.post('/', async (req, res) => {
     let user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        name: req.body.name,
         email: req.body.email,
+        passwordHash: req.body.passwordHash,
+        isAdmin: req.body.isAdmin,
         phone: req.body.phone,
-        address: req.body.address,
+        street: req.body.street,
+        apartment: req.body.apartment,
+        zip: req.body.zip,
+        city: req.body.city,
+        country: req.body.country,
     })
     user = await user.save();
     if (!user) {
