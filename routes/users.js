@@ -1,6 +1,7 @@
 const express = require('express')
 const { User } = require('../model/user')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const router = express.Router();
 
 
@@ -45,7 +46,7 @@ router.post('/', async (req, res) => {
     let user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 5), //using bcryptjs to hashing user password//
+        password: bcrypt.hashSync(req.body.password, 10), //using bcryptjs to hashing user password//
         isAdmin: req.body.isAdmin,
         phone: req.body.phone,
         street: req.body.street,
@@ -65,14 +66,22 @@ router.post('/', async (req, res) => {
 //login a user with validating by email
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
+    const secret = process.env.secret
     if (!user) {
         return res.status(500).json({ message: 'User not found, Please create an user or check again' })
     }
 
     //user password matching
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
-        res.status(200).send('User Authenticated')
-    } else {
+        const token = jwt.sign(       //using jwt for generating token for user login
+            {
+                userId: user.id
+            },
+            secret,
+        )
+        res.status(200).send({ user: user.email, token: token })
+    }
+    else {
         res.status(200).send('Password is wrong!')
     }
 })
