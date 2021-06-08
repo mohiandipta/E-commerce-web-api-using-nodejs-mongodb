@@ -8,14 +8,14 @@ const router = express.Router();
 //api will be in http://localhost:3000/api/v1/categories
 //get all data
 router.get(`/`, async (req, res) => {
-    let userList = await User.find({})
+    let userList = await User.find().select('-password') //using select() to get user list excluding password
     res.send(userList)
 })
 
 //get data by ID
 //url will be in http://localhost:3000/api/v1/categories/ID
 router.get('/:id', async (req, res) => {
-    let user = await User.findById(req.params.id)
+    let user = await User.findById(req.params.id).select('-password')
     if (!user) {
         return res.status(500).json({ message: 'the user with the given ID was not found' })
     }
