@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
-const mongoose = require('mongoose')
 const cors = require('cors')
+const authJwt = require('./helpers/jwt')
+const mongoose = require('mongoose')
 
 
 require('dotenv/config')
@@ -15,7 +16,8 @@ app.options('*', cors())
 
 //middleware method
 app.use(express.json());
-app.use(morgan('tiny'))
+app.use(morgan('tiny'));
+app.use(authJwt());
 
 
 //routes
