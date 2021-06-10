@@ -7,6 +7,10 @@ function authJwt() {
         secret,
         algorithms: ['HS256']
     })
+        // excluding REST api routes from authentication
+        .unless({
+            path: ['/api/v1/users/login']
+        })
 }
 
 module.exports = authJwt;
