@@ -18,8 +18,8 @@ app.options('*', cors())
 //middleware method
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use(authJwt()); //jwt middleware
-app.use(errorHandler) //authentication error-handler
+// app.use(authJwt()); //jwt middleware
+// app.use(errorHandler) //authentication error-handler
 
 
 //routes

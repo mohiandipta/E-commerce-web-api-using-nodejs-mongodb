@@ -23,6 +23,17 @@ router.get('/:id', async (req, res) => {
     res.status(200).send(user)
 })
 
+
+//user count
+router.get(`/get/count`, async (req, res) => {
+    const userCount = await User.countDocuments((count) => count)
+    if (!userCount) {
+        return res.status(500).json({ success: false })
+    }
+    res.status(200).send({ userCount: userCount })
+})
+
+
 //put(update) data by ID
 router.put('/:id', async (req, res) => {
     let user = await User.findByIdAndUpdate(
