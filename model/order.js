@@ -1,7 +1,13 @@
 const mongoose = require('mongoose')
 const { User } = require('./user')
+const { OrderItem } = require('./OrderItem')
 
 const orderSchema = mongoose.Schema({
+    orderItems: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: OrderItem,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -30,6 +36,15 @@ const orderSchema = mongoose.Schema({
             type: Boolean
         }
     }
+})
+
+
+//changing _id key to id for further use
+orderSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+orderSchema.set('toJSON', {
+    virtuals: true,
 })
 
 
