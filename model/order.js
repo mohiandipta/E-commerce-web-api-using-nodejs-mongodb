@@ -3,11 +3,11 @@ const { User } = require('./user')
 const { OrderItem } = require('./OrderItem')
 
 const orderSchema = mongoose.Schema({
-    orderItems: {
+    orderItems: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: OrderItem,
         required: true
-    },
+    }],
     name: {
         type: String,
         required: true
@@ -46,6 +46,32 @@ orderSchema.virtual('id').get(function () {
 orderSchema.set('toJSON', {
     virtuals: true,
 })
+
+
+/** 
+Order Example:
+
+{
+    "orderItems": [
+        {
+            "quantity": 3,
+            "product": "productID"
+        },
+        {
+            "quantity": 2,
+            "product": "productID"
+        }
+    ],
+    "shippingAddress1": "Address",
+    "shippingAddress": "Address2",
+    "city": "",
+    "zip": "",
+    "country": "",
+    "phone": "",
+    "user": "userID"
+}
+
+*/
 
 
 exports.Order = mongoose.model('Order', orderSchema)
